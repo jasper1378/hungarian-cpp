@@ -30,12 +30,3 @@
 *.exe
 *.out
 *.app
-
-# Build directory
-build/
-
-# Executable directory
-bin/
-
-# Executable symlink
-hungarian-cpp
