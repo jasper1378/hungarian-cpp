@@ -39,8 +39,8 @@ ArgParser::ArgParser(const int argc, char** const argv, const std::vector<ValidN
                             if (((static_cast<std::string>(*(cur_arg_ptr + 1)) == m_valid_names[comparison_valid_name].name.short_name)) ||
                                 ((static_cast<std::string>(*(cur_arg_ptr + 1)) == m_valid_names[comparison_valid_name].name.long_name)))
                             {
-                                //throw std::runtime_error{ "option: " + cur_arg + " is missing required argument, try \"jasper-hungarian --help\"" };
-                                std::cerr << "Option: " << cur_arg << " is missing required argument, try \"jasper-hungarian --help\"\n";
+                                //throw std::runtime_error{ "option: " + cur_arg + " is missing required argument, try \"hungarian-cpp --help\"" };
+                                std::cerr << "Option: " << cur_arg << " is missing required argument, try \"hungarian-cpp --help\"\n";
                                 break;
                             }
                         }
@@ -51,8 +51,8 @@ ArgParser::ArgParser(const int argc, char** const argv, const std::vector<ValidN
                     }
                     else
                     {
-                        //throw std::runtime_error{ "option: " + cur_arg + " is missing required argument, try \"jasper-hungarian --help\"" };
-                        std::cerr << "Option: " << cur_arg << " is missing required argument, try \"jasper-hungarian --help\"\n";
+                        //throw std::runtime_error{ "option: " + cur_arg + " is missing required argument, try \"hungarian-cpp --help\"" };
+                        std::cerr << "Option: " << cur_arg << " is missing required argument, try \"hungarian-cpp --help\"\n";
                         break;
                     }
                 }
@@ -61,8 +61,8 @@ ArgParser::ArgParser(const int argc, char** const argv, const std::vector<ValidN
 
         if (arg_matches_a_valid_name == false)
         {
-            //throw std::runtime_error{ "incorrect option: " + cur_arg + ", try \"jasper-hungarian --help\"" };
-            std::cerr << "Incorrect option: " << cur_arg << ", try \"jasper-hungarian --help\"\n";
+            //throw std::runtime_error{ "incorrect option: " + cur_arg + ", try \"hungarian-cpp --help\"" };
+            std::cerr << "Incorrect option: " << cur_arg << ", try \"hungarian-cpp --help\"\n";
         }
     }
 }

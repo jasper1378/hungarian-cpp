@@ -8,7 +8,7 @@ void PrintHelp()
     std::cout << "Following the steps outlined here: https://brc2.com/the-algorithm-workshop\n";
     std::cout << '\n';
 
-    std::cout << "Usage: jasper-hungarian [options]\n";
+    std::cout << "Usage: hungarian-cpp [options]\n";
     std::cout << "Options:\n";
     std::cout << '\n';
 
