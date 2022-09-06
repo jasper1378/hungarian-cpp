@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        ArgParser arg_parser{ argc, argv, { { {"jasper-hungarian", "./jasper-hungarian"}, false}, { { "-h", "--help" }, false }, { { "-bm", "--benchmark" }, false }, { { "-if", "--input-file" }, true }, { { "-si", "--standard-input" }, false }, { { "-rm", "--random-matrix"}, true }, { { "../jasper-hungarian", "TEMPORARY" }, false} } };
+        ArgParser arg_parser{ argc, argv, { { {"hungarian-cpp", "./hungarian-cpp"}, false}, { { "-h", "--help" }, false }, { { "-bm", "--benchmark" }, false }, { { "-if", "--input-file" }, true }, { { "-si", "--standard-input" }, false }, { { "-rm", "--random-matrix"}, true }, { { "../hungarian-cpp", "TEMPORARY" }, false} } };
 
         if (arg_parser.ArgExists("-h"))
         {
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            throw std::runtime_error{ "please specify an operation, try \"jasper-hungarian --help\"" };
+            throw std::runtime_error{ "please specify an operation, try \"hungarian-cpp --help\"" };
         }
 
         if (arg_parser.ArgExists("-bm"))
