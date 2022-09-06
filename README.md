@@ -45,4 +45,4 @@ Options:
 ```
 
 ## License
-See [LICENSE.md](LICENSE.MD) for details.
+See [LICENSE.md](LICENSE.md) for details.
