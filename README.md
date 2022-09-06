@@ -1,14 +1,9 @@
 # hungarian-cpp
 
-## Table of Contents
-+ [About](#about)
-+ [Installation](#installation)
-+ [Usage](#usage)
-
-## About <a name = "about"></a>
+## About
 An implementation of the Hungarian (Kuhn-Munkres) written in C++. Originally written for [this](https://www.reddit.com/r/dailyprogrammer/comments/oirb5v/20210712_challenge_398_difficult_matrix_sum/?utm_source=share&utm_medium=web2x&context=3) programming challenge (see [question.md](question.md) for details). 
 
-## Installation <a name = "installation"></a>
+## Installation
 Acquire the sources
 ```
 $ git clone https://github.com/jasper1378/hungarian-cpp.git
@@ -23,7 +18,7 @@ Install
 $ make install
 ```
 
-## Usage <a name = "usage"></a>
+## Usage
 ```
 Usage: hungarian-cpp [options]
 Options:
@@ -48,3 +43,6 @@ Options:
 	--benchmark
 	Print a benchmark report for the algorithm after printing the solution.
 ```
+
+## License
+See [LICENSE.md](LICENSE.md) for details.
