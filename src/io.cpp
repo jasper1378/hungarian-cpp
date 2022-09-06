@@ -37,6 +37,5 @@ void PrintHelp()
     std::cout << "\tPrint a benchmark report for the algorithm after printing the solution.\n";
     std::cout << '\n';
 
-    std::cout << "Bugs can be reported to:\n";
-    std::cout << "jasper.c.young@gmail.com\n";
+    std::cout << "To report a bug, please create an issue on github (https://github.com/jasper1378/hungarian-cpp/issues)\n";
 }
