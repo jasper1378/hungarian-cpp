@@ -59,12 +59,12 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 
 .PHONY: install
 install:
-	install -v -Dm755 $(BUILD_DIR)/$(BIN_NAME) -t $(INSTALL_PATH)/
+	@install -v -Dm755 $(BUILD_DIR)/$(BIN_NAME) -t $(INSTALL_PATH)/
 
 .PHONY: uninstall
 uninstall:
-	rm $(INSTALL_PATH)/$(BIN_NAME)
+	@rm -v $(INSTALL_PATH)/$(BIN_NAME)
 
 .PHONY: clean
 clean:
-	rm -r $(BUILD_DIR)
+	@rm -v -r $(BUILD_DIR)
