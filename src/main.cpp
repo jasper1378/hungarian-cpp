@@ -11,6 +11,7 @@
 
 #include <exception>
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 #include <vector>
 
@@ -28,7 +29,8 @@ int main(int argc, char* argv[])
             return 0;
         }
 
-        Hungarian<data_t>* hungarian;
+        std::unique_ptr<Hungarian<data_t>> hungarian{ nullptr };
+
         Matrix<data_t> matrix;
 
         if (arg_parser.ArgExists("-if"))
@@ -50,18 +52,15 @@ int main(int argc, char* argv[])
 
         if (arg_parser.ArgExists("-bm"))
         {
-            hungarian = new TimedHungarian<data_t>{ matrix };
+            hungarian = std::make_unique<TimedHungarian<data_t>>(matrix);
         }
         else
         {
-            hungarian = new Hungarian<data_t>{ matrix };
+            hungarian = std::make_unique<Hungarian<data_t>>(matrix);
         }
 
         hungarian->Solve();
         std::cout << *hungarian;
-
-        delete hungarian;
-        hungarian = nullptr;
     }
     catch (const std::exception& exception)
     {
