@@ -28,7 +28,7 @@ Hungarian<T>::Hungarian(const Hungarian& h)
 }
 
 template<typename T>
-Hungarian<T>::Hungarian(Hungarian&& h)
+Hungarian<T>::Hungarian(Hungarian&& h) noexcept
     : m_mx_og{ std::move(h.m_mx_og) },
       m_mx_wrk{ std::move(h.m_mx_wrk) },
       m_smallest_uncovered_value_from_S4{ std::move(h.m_smallest_uncovered_value_from_S4) },
@@ -301,7 +301,7 @@ Hungarian<T>& Hungarian<T>::operator= (const Hungarian<T>& h)
 }
 
 template<typename T>
-Hungarian<T>& Hungarian<T>::operator= (Hungarian<T>&& h)
+Hungarian<T>& Hungarian<T>::operator= (Hungarian<T>&& h) noexcept
 {
     if (this == &h)
     {

@@ -28,7 +28,7 @@ ArgParser::ArgParser(const ArgParser& ap)
 {
 }
 
-ArgParser::ArgParser(ArgParser&& ap)
+ArgParser::ArgParser(ArgParser&& ap) noexcept
     : m_args{ std::move(ap.m_args) },
       m_valid_names{ std::move(ap.m_valid_names) }
 {
@@ -77,7 +77,7 @@ ArgParser& ArgParser::operator= (const ArgParser& ap)
     return *this;
 }
 
-ArgParser& ArgParser::operator= (ArgParser&& ap)
+ArgParser& ArgParser::operator= (ArgParser&& ap) noexcept
 {
     if (this == &ap)
     {

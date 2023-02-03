@@ -15,7 +15,7 @@ class Hungarian
     public:
 
         Hungarian(const Hungarian& h);
-        Hungarian(Hungarian&& h);
+        Hungarian(Hungarian&& h) noexcept;
 
         Hungarian(const Matrix<T>& source_matrix);
         Hungarian(Matrix<T>&& source_matrix);
@@ -85,7 +85,7 @@ class Hungarian
     public:
 
         Hungarian<T>& operator= (const Hungarian<T>& h);
-        Hungarian<T>& operator= (Hungarian<T>&& h);
+        Hungarian<T>& operator= (Hungarian<T>&& h) noexcept;
 
         template<typename U>
         friend std::ostream& operator<< (std::ostream& out, const Hungarian<U>& h);
