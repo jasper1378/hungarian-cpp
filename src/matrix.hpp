@@ -17,6 +17,8 @@ class Matrix
 
         Matrix(const Matrix& matrix);
 
+        Matrix(Matrix&& matrix);
+
         Matrix(const size_t rows, const size_t cols);
 
         Matrix(const std::initializer_list<std::initializer_list<T>>& init_list);
@@ -44,6 +46,7 @@ class Matrix
     public:
 
         Matrix<T>& operator= (const Matrix<T>& m);
+        Matrix<T>& operator= (Matrix<T>&& m);
 
         T& operator() (const size_t row, const size_t col);
         const T& operator() (const size_t row, const size_t cols) const;

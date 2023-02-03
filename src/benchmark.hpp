@@ -12,7 +12,9 @@ class Benchmark
 {
     public:
 
-        Benchmark(int num_of_steps);
+        Benchmark(const int num_of_steps);
+        Benchmark(const Benchmark& other);
+        Benchmark(Benchmark&& other);
 
         ~Benchmark();
 
@@ -35,15 +37,16 @@ class Benchmark
 
     public:
 
-        void Start(int step_id);
+        void Start(const int step_id);
 
-        void Stop(int step_id);
+        void Stop(const int step_id);
 
         void PrintReport() const;
 
     public:
 
         Benchmark& operator= (const Benchmark& bm);
+        Benchmark& operator= (Benchmark&& bm);
 
         friend std::ostream& operator<< (std::ostream& out, const Benchmark& bm);
 

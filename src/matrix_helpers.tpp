@@ -169,16 +169,4 @@ T DigitsToNumber(const std::vector<char>& digits)
     return number;
 }
 
-std::vector<char> StringToCharVec(const std::string& string)
-{
-    std::vector<char> char_vec;
-
-    for (size_t i{ 0 }; i < string.length(); ++i)
-    {
-        char_vec.push_back(string[i]);
-    }
-
-    return char_vec;
-}
-
 #endif

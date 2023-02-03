@@ -34,8 +34,10 @@ class ArgParser
     public:
 
         ArgParser(const int argc, char** argv, const std::vector<ValidName>& valid_names);
+        ArgParser(const int argc, char** argv, std::vector<ValidName>&& valid_names);
 
         ArgParser(const ArgParser& ap);
+        ArgParser(ArgParser&& ap);
 
         ~ArgParser();
 
@@ -54,8 +56,13 @@ class ArgParser
     public:
 
         ArgParser& operator= (const ArgParser& ap);
+        ArgParser& operator= (ArgParser&& ap);
 
         friend std::ostream& operator<< (std::ostream& out, const ArgParser& ap);
+
+    private:
+
+        void Init(const int argc, char** argv);
 };
 
 #endif

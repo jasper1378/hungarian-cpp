@@ -15,8 +15,10 @@ class Hungarian
     public:
 
         Hungarian(const Hungarian& h);
+        Hungarian(Hungarian&& h);
 
         Hungarian(const Matrix<T>& source_matrix);
+        Hungarian(Matrix<T>&& source_matrix);
 
         virtual ~Hungarian();
 
@@ -83,6 +85,7 @@ class Hungarian
     public:
 
         Hungarian<T>& operator= (const Hungarian<T>& h);
+        Hungarian<T>& operator= (Hungarian<T>&& h);
 
         template<typename U>
         friend std::ostream& operator<< (std::ostream& out, const Hungarian<U>& h);

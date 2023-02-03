@@ -25,6 +25,29 @@ Hungarian<T>::Hungarian(const Hungarian& h)
       m_is_solved{ h.m_is_solved },
       m_solution{ h.m_solution }
 {
+}
+
+template<typename T>
+Hungarian<T>::Hungarian(Hungarian&& h)
+    : m_mx_og{ std::move(h.m_mx_og) },
+      m_mx_wrk{ std::move(h.m_mx_wrk) },
+      m_smallest_uncovered_value_from_S4{ std::move(h.m_smallest_uncovered_value_from_S4) },
+      m_primed_zero_from_S4{ std::move(h.m_primed_zero_from_S4) },
+      m_next_step{ std::move(h.m_next_step) },
+      m_is_solved{ std::move(h.m_is_solved) },
+      m_solution{ std::move(h.m_solution) }
+{
+}
+
+template<typename T>
+Hungarian<T>::Hungarian(const Matrix<T>& source_matrix)
+    : m_mx_og{ SimpleMatrixToHungarianMatrix(source_matrix) },
+      m_mx_wrk{ SimpleMatrixToHungarianMatrix(source_matrix) },
+      m_smallest_uncovered_value_from_S4{ static_cast<T>(INFINITY) },
+      m_primed_zero_from_S4{ Location2D{ 0, 0 } },
+      m_next_step{ 1 },
+      m_is_solved{ false }
+{
     if (MatrixIsSquare() == false)
     {
         throw std::runtime_error{ "hungarian matrix must be square" };
@@ -32,9 +55,9 @@ Hungarian<T>::Hungarian(const Hungarian& h)
 }
 
 template<typename T>
-Hungarian<T>::Hungarian(const Matrix<T>& source_matrix)
-    : m_mx_og{ SimpleMatrixToHungarianMatrix(source_matrix) },
-      m_mx_wrk{ SimpleMatrixToHungarianMatrix(source_matrix) },
+Hungarian<T>::Hungarian(Matrix<T>&& source_matrix)
+    : m_mx_og{ SimpleMatrixToHungarianMatrix(std::move(source_matrix)) },
+      m_mx_wrk{ SimpleMatrixToHungarianMatrix(std::move(source_matrix)) },
       m_smallest_uncovered_value_from_S4{ static_cast<T>(INFINITY) },
       m_primed_zero_from_S4{ Location2D{ 0, 0 } },
       m_next_step{ 1 },
@@ -274,10 +297,24 @@ Hungarian<T>& Hungarian<T>::operator= (const Hungarian<T>& h)
     m_is_solved = h.m_is_solved;
     m_solution = h.m_solution;
 
-    if (MatrixIsSquare() == false)
+    return *this;
+}
+
+template<typename T>
+Hungarian<T>& Hungarian<T>::operator= (Hungarian<T>&& h)
+{
+    if (this == &h)
     {
-        throw std::runtime_error{ "hungarian matrix must be square" };
+        return *this;
     }
+
+    m_mx_og = std::move(h.m_mx_og);
+    m_mx_wrk = std::move(h.m_mx_wrk);
+    m_smallest_uncovered_value_from_S4 = std::move(h.m_smallest_uncovered_value_from_S4);
+    m_primed_zero_from_S4 = std::move(h.m_primed_zero_from_S4);
+    m_next_step = std::move(h.m_next_step);
+    m_is_solved = std::move(h.m_is_solved);
+    m_solution = std::move(h.m_solution);
 
     return *this;
 }

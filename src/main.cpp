@@ -13,6 +13,7 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
 int main(int argc, char* argv[])
@@ -21,7 +22,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        ArgParser arg_parser{ argc, argv, { { {"hungarian-cpp", "./hungarian-cpp"}, false}, { { "-h", "--help" }, false }, { { "-bm", "--benchmark" }, false }, { { "-if", "--input-file" }, true }, { { "-si", "--standard-input" }, false }, { { "-rm", "--random-matrix"}, true }, { { "../hungarian-cpp", "TEMPORARY" }, false} } };
+        const std::vector<ArgParser::ValidName> valid_names{ { {"hungarian-cpp", "./hungarian-cpp"}, false}, { { "-h", "--help" }, false }, { { "-bm", "--benchmark" }, false }, { { "-if", "--input-file" }, true }, { { "-si", "--standard-input" }, false }, { { "-rm", "--random-matrix"}, true }, { { "../hungarian-cpp", "TEMPORARY" }, false} };
+        ArgParser arg_parser{ argc, argv, std::move(valid_names) };
 
         if (arg_parser.ArgExists("-h"))
         {
@@ -52,11 +54,11 @@ int main(int argc, char* argv[])
 
         if (arg_parser.ArgExists("-bm"))
         {
-            hungarian = std::make_unique<TimedHungarian<data_t>>(matrix);
+            hungarian = std::make_unique<TimedHungarian<data_t>>(std::move(matrix));
         }
         else
         {
-            hungarian = std::make_unique<Hungarian<data_t>>(matrix);
+            hungarian = std::make_unique<Hungarian<data_t>>(std::move(matrix));
         }
 
         hungarian->Solve();

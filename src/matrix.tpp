@@ -44,6 +44,17 @@ Matrix<T>::Matrix(const Matrix& m)
 }
 
 template<typename T>
+Matrix<T>::Matrix(Matrix&& m)
+    : m_rows{ m.m_rows },
+      m_cols{ m.m_cols },
+      m_data{ m.m_data }
+{
+    m.m_rows = 0;
+    m.m_cols = 0;
+    m.m_data = nullptr;
+}
+
+template<typename T>
 Matrix<T>::Matrix(const size_t rows, const size_t cols)
     : m_rows{ 0 },
       m_cols{ 0 },
@@ -245,6 +256,25 @@ Matrix<T>& Matrix<T>::operator= (const Matrix<T>& m)
             }
         }
     }
+
+    return *this;
+}
+
+template<typename T>
+Matrix<T>& Matrix<T>::operator= (Matrix<T>&& m)
+{
+    if (this == &m)
+    {
+        return *this;
+    }
+
+    m_rows = m.m_rows;
+    m_cols = m.m_cols;
+    m_data = m.m_data;
+
+    m.m_rows = 0;
+    m.m_cols = 0;
+    m.m_data = nullptr;
 
     return *this;
 }

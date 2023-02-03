@@ -15,8 +15,10 @@ class TimedHungarian : public Hungarian<T>
     public:
 
         TimedHungarian(const TimedHungarian& th);
+        TimedHungarian(TimedHungarian&& th);
 
         TimedHungarian(const Matrix<T>& source_matrix);
+        TimedHungarian(Matrix<T>&& source_matrix);
 
         ~TimedHungarian() override;
 
@@ -31,6 +33,7 @@ class TimedHungarian : public Hungarian<T>
     public:
 
         TimedHungarian<T>& operator= (const TimedHungarian<T>& th);
+        TimedHungarian<T>& operator= (TimedHungarian<T>&& th);
 
     private:
 

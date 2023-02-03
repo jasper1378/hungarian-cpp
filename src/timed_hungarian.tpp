@@ -10,17 +10,32 @@
 #include "matrix.hpp"
 
 #include <iostream>
+#include <utility>
 
 template<typename T>
 TimedHungarian<T>::TimedHungarian(const TimedHungarian& th)
-    : Hungarian<T>::Hungarian(th),
+    : Hungarian<T>{ th },
       m_benchmark{ th.m_benchmark }
 {
 }
 
 template<typename T>
+TimedHungarian<T>::TimedHungarian(TimedHungarian&& th)
+    : Hungarian<T>{ std::move(th) },
+      m_benchmark{ std::move(th.m_benchmark) }
+{
+}
+
+template<typename T>
 TimedHungarian<T>::TimedHungarian(const Matrix<T>& source_matrix)
-    : Hungarian<T>::Hungarian( source_matrix ),
+    : Hungarian<T>{source_matrix },
+      m_benchmark{ Benchmark{ 7 } }
+{
+}
+
+template<typename T>
+TimedHungarian<T>::TimedHungarian(Matrix<T>&& source_matrix)
+    : Hungarian<T>{ std::move(source_matrix) },
       m_benchmark{ Benchmark{ 7 } }
 {
 }
@@ -48,6 +63,21 @@ TimedHungarian<T>& TimedHungarian<T>::operator= (const TimedHungarian<T>& th)
     Hungarian<T>::operator=(th);
 
     m_benchmark = th.m_benchmark;
+
+    return *this;
+}
+
+template<typename T>
+TimedHungarian<T>& TimedHungarian<T>::operator= (TimedHungarian<T>&& th)
+{
+    if (this == &th)
+    {
+        return *this;
+    }
+
+    Hungarian<T>::operator=(std::move(th));
+
+    m_benchmark = std::move(th.m_benchmark);
 
     return *this;
 }
