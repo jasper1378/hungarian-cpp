@@ -17,7 +17,7 @@ class Matrix
 
         Matrix(const Matrix& matrix);
 
-        Matrix(Matrix&& matrix);
+        Matrix(Matrix&& matrix) noexcept;
 
         Matrix(const size_t rows, const size_t cols);
 
@@ -46,7 +46,7 @@ class Matrix
     public:
 
         Matrix<T>& operator= (const Matrix<T>& m);
-        Matrix<T>& operator= (Matrix<T>&& m);
+        Matrix<T>& operator= (Matrix<T>&& m) noexcept;
 
         T& operator() (const size_t row, const size_t col);
         const T& operator() (const size_t row, const size_t cols) const;

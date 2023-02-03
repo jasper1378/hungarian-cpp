@@ -37,7 +37,7 @@ class ArgParser
         ArgParser(const int argc, char** argv, std::vector<ValidName>&& valid_names);
 
         ArgParser(const ArgParser& ap);
-        ArgParser(ArgParser&& ap);
+        ArgParser(ArgParser&& ap) noexcept;
 
         ~ArgParser();
 
@@ -56,7 +56,7 @@ class ArgParser
     public:
 
         ArgParser& operator= (const ArgParser& ap);
-        ArgParser& operator= (ArgParser&& ap);
+        ArgParser& operator= (ArgParser&& ap) noexcept;
 
         friend std::ostream& operator<< (std::ostream& out, const ArgParser& ap);
 

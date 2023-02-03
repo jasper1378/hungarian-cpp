@@ -44,7 +44,7 @@ Matrix<T>::Matrix(const Matrix& m)
 }
 
 template<typename T>
-Matrix<T>::Matrix(Matrix&& m)
+Matrix<T>::Matrix(Matrix&& m) noexcept
     : m_rows{ m.m_rows },
       m_cols{ m.m_cols },
       m_data{ m.m_data }
@@ -261,7 +261,7 @@ Matrix<T>& Matrix<T>::operator= (const Matrix<T>& m)
 }
 
 template<typename T>
-Matrix<T>& Matrix<T>::operator= (Matrix<T>&& m)
+Matrix<T>& Matrix<T>::operator= (Matrix<T>&& m) noexcept
 {
     if (this == &m)
     {
