@@ -1,7 +1,5 @@
 /* vim: set filetype=cpp : */
 
-#pragma once
-
 #ifndef HUNGARIAN_TPP
 #define HUNGARIAN_TPP
 

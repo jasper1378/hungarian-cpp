@@ -1,7 +1,5 @@
 /* vim: set filetype=cpp : */
 
-#pragma once
-
 #ifndef MATRIX_TPP
 #define MATRIX_TPP
 
