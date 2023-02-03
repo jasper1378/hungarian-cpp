@@ -1,7 +1,5 @@
 /* vim: set filetype=cpp : */
 
-#pragma once
-
 #ifndef ARG_PARSER_HPP
 #define ARG_PARSER_HPP
 

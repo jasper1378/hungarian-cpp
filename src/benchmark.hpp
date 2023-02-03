@@ -1,7 +1,5 @@
 /* vim: set filetype=cpp : */
 
-#pragma once
-
 #ifndef BENCHMARK_HPP
 #define BENCHMARK_HPP
 

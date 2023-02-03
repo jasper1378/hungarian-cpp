@@ -1,7 +1,5 @@
 /* vim: set filetype=cpp : */
 
-#pragma once
-
 #ifndef HUNGARIAN_HPP
 #define HUNGARIAN_HPP
 

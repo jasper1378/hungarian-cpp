@@ -1,7 +1,5 @@
 /* vim: set filetype=cpp : */
 
-#pragma once
-
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
