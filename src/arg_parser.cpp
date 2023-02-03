@@ -7,10 +7,103 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
-ArgParser::ArgParser(const int argc, char** const argv, const std::vector<ValidName>& valid_names)
+ArgParser::ArgParser(const int argc, char** argv, const std::vector<ValidName>& valid_names)
     : m_valid_names{ valid_names }
+{
+    Init(argc, argv);
+}
+
+ArgParser::ArgParser(const int argc, char** argv, std::vector<ValidName>&& valid_names)
+    : m_valid_names{ std::move(valid_names) }
+{
+    Init(argc, argv);
+}
+
+ArgParser::ArgParser(const ArgParser& ap)
+    : m_args{ ap.m_args },
+      m_valid_names{ ap.m_valid_names }
+{
+}
+
+ArgParser::ArgParser(ArgParser&& ap)
+    : m_args{ std::move(ap.m_args) },
+      m_valid_names{ std::move(ap.m_valid_names) }
+{
+}
+
+ArgParser::~ArgParser()
+{
+}
+
+bool ArgParser::ArgExists(const std::string& name) const
+{
+    for (size_t cur_arg{ 0 }; cur_arg < m_args.size(); ++cur_arg)
+    {
+        if ((name == m_args[cur_arg].name.short_name) || (name == m_args[cur_arg].name.long_name))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+std::string ArgParser::GetValue(const std::string& name) const
+{
+    for (size_t cur_arg{ 0 }; cur_arg < m_args.size(); ++cur_arg)
+    {
+        if ((name == m_args[cur_arg].name.short_name) || (name == m_args[cur_arg].name.long_name))
+        {
+            return m_args[cur_arg].value;
+        }
+    }
+
+    return "";
+}
+
+ArgParser& ArgParser::operator= (const ArgParser& ap)
+{
+    if (this == &ap)
+    {
+        return *this;
+    }
+
+    m_args = ap.m_args;
+    m_valid_names = ap.m_valid_names;
+
+    return *this;
+}
+
+ArgParser& ArgParser::operator= (ArgParser&& ap)
+{
+    if (this == &ap)
+    {
+        return *this;
+    }
+
+    m_args = std::move(ap.m_args);
+    m_valid_names = std::move(ap.m_valid_names);
+
+    return *this;
+}
+
+std::ostream& operator<< (std::ostream& out, const ArgParser& ap)
+{
+    for (size_t cur_arg{ 0 }; cur_arg < ap.m_args.size(); ++cur_arg)
+    {
+        out << "Short name: " << ap.m_args[cur_arg].name.short_name << '\n';
+        out << "Long name: " << ap.m_args[cur_arg].name.long_name << '\n';
+        out << "Value: " << ((ap.m_args[cur_arg].value == "") ? ("arg does not need a value") : (ap.m_args[cur_arg].name.short_name)) << '\n';
+        out << '\n';
+    }
+
+    return out;
+}
+
+void ArgParser::Init(const int argc, char** argv)
 {
     for (char** cur_arg_ptr{ argv }; cur_arg_ptr != (argv + argc); ++cur_arg_ptr)
     {
@@ -65,66 +158,4 @@ ArgParser::ArgParser(const int argc, char** const argv, const std::vector<ValidN
             std::cerr << "Incorrect option: " << cur_arg << ", try \"hungarian-cpp --help\"\n";
         }
     }
-}
-
-ArgParser::ArgParser(const ArgParser& ap)
-{
-    m_args = ap.m_args;
-    m_valid_names = ap.m_valid_names;
-}
-
-ArgParser::~ArgParser()
-{
-}
-
-bool ArgParser::ArgExists(const std::string& name) const
-{
-    for (size_t cur_arg{ 0 }; cur_arg < m_args.size(); ++cur_arg)
-    {
-        if ((name == m_args[cur_arg].name.short_name) || (name == m_args[cur_arg].name.long_name))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-std::string ArgParser::GetValue(const std::string& name) const
-{
-    for (size_t cur_arg{ 0 }; cur_arg < m_args.size(); ++cur_arg)
-    {
-        if ((name == m_args[cur_arg].name.short_name) || (name == m_args[cur_arg].name.long_name))
-        {
-            return m_args[cur_arg].value;
-        }
-    }
-
-    return "";
-}
-
-ArgParser& ArgParser::operator= (const ArgParser& ap)
-{
-    if (this == &ap)
-    {
-        return *this;
-    }
-
-    m_args = ap.m_args;
-    m_valid_names = ap.m_valid_names;
-
-    return *this;
-}
-
-std::ostream& operator<< (std::ostream& out, const ArgParser& ap)
-{
-    for (size_t cur_arg{ 0 }; cur_arg < ap.m_args.size(); ++cur_arg)
-    {
-        out << "Short name: " << ap.m_args[cur_arg].name.short_name << '\n';
-        out << "Long name: " << ap.m_args[cur_arg].name.long_name << '\n';
-        out << "Value: " << ((ap.m_args[cur_arg].value == "") ? ("arg does not need a value") : (ap.m_args[cur_arg].name.short_name)) << '\n';
-        out << '\n';
-    }
-
-    return out;
 }

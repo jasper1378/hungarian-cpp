@@ -5,13 +5,15 @@
 #include <cstddef>
 #include <exception>
 #include <iostream>
-#include <string>
 #include <stdexcept>
+#include <string>
+#include <utility>
 #include <vector>
 
-Benchmark::Benchmark(int num_of_steps)
+Benchmark::Benchmark(const int num_of_steps)
     : m_number_of_steps{ num_of_steps },
-      m_total_time{ 0 }
+      m_total_time{ 0 },
+      m_time_by_step{}
 {
     for (int i{ 1 }; i <= num_of_steps; ++i)
     {
@@ -19,11 +21,25 @@ Benchmark::Benchmark(int num_of_steps)
     }
 }
 
+Benchmark::Benchmark(const Benchmark& other)
+    : m_number_of_steps{ other.m_number_of_steps },
+      m_total_time{ other.m_total_time },
+      m_time_by_step{ other.m_time_by_step }
+{
+}
+
+Benchmark::Benchmark(Benchmark&& other)
+    : m_number_of_steps{ std::move(other.m_number_of_steps) },
+      m_total_time{ std::move(other.m_total_time) },
+      m_time_by_step{ std::move(other.m_time_by_step) }
+{
+}
+
 Benchmark::~Benchmark()
 {
 }
 
-void Benchmark::Start(int step_id)
+void Benchmark::Start(const int step_id)
 {
     if ((step_id > m_number_of_steps) && (step_id < m_number_of_steps))
     {
@@ -35,7 +51,7 @@ void Benchmark::Start(int step_id)
     m_time_by_step[cur_step].current_time.Reset();
 }
 
-void Benchmark::Stop(int step_id)
+void Benchmark::Stop(const int step_id)
 {
     if ((step_id > m_number_of_steps) && (step_id < m_number_of_steps))
     {
@@ -63,6 +79,20 @@ Benchmark& Benchmark::operator= (const Benchmark& bm)
     m_number_of_steps = bm.m_number_of_steps;
     m_total_time = bm.m_total_time;
     m_time_by_step = bm.m_time_by_step;
+
+    return *this;
+}
+
+Benchmark& Benchmark::operator= (Benchmark&& bm)
+{
+    if (this == &bm)
+    {
+        return *this;
+    }
+
+    m_number_of_steps = std::move(bm.m_number_of_steps);
+    m_total_time = std::move(bm.m_total_time);
+    m_time_by_step = std::move(bm.m_time_by_step);
 
     return *this;
 }

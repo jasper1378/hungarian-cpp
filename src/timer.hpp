@@ -11,6 +11,9 @@ class Timer
 
         Timer();
 
+        Timer(const Timer& t);
+        Timer(Timer&& t);
+
         ~Timer();
 
     private:
@@ -31,6 +34,7 @@ class Timer
     public:
 
         Timer& operator= (const Timer& t);
+        Timer& operator= (Timer&& t);
 };
 
 #endif
