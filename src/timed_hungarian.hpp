@@ -9,47 +9,40 @@
 
 #include <iostream>
 
-template<typename T>
-class TimedHungarian : public Hungarian<T>
-{
-    public:
+template <typename T> class TimedHungarian : public Hungarian<T> {
+public:
+  TimedHungarian(const TimedHungarian &th);
+  TimedHungarian(TimedHungarian &&th);
 
-        TimedHungarian(const TimedHungarian& th);
-        TimedHungarian(TimedHungarian&& th);
+  TimedHungarian(const Matrix<T> &source_matrix);
+  TimedHungarian(Matrix<T> &&source_matrix);
 
-        TimedHungarian(const Matrix<T>& source_matrix);
-        TimedHungarian(Matrix<T>&& source_matrix);
+  ~TimedHungarian() override;
 
-        ~TimedHungarian() override;
+private:
+  Benchmark m_benchmark;
 
-    private:
+public:
+  void PrintSolution(std::ostream &out) const override;
 
-        Benchmark m_benchmark;
+public:
+  TimedHungarian<T> &operator=(const TimedHungarian<T> &th);
+  TimedHungarian<T> &operator=(TimedHungarian<T> &&th);
 
-    public:
+private:
+  void Step1() override;
 
-        void PrintSolution(std::ostream& out) const override;
+  void Step2() override;
 
-    public:
+  void Step3() override;
 
-        TimedHungarian<T>& operator= (const TimedHungarian<T>& th);
-        TimedHungarian<T>& operator= (TimedHungarian<T>&& th);
+  void Step4() override;
 
-    private:
+  void Step5() override;
 
-        void Step1() override;
+  void Step6() override;
 
-        void Step2() override;
-
-        void Step3() override;
-
-        void Step4() override;
-
-        void Step5() override;
-
-        void Step6() override;
-
-        void Step7() override;
+  void Step7() override;
 };
 
 #include "timed_hungarian.tpp"
