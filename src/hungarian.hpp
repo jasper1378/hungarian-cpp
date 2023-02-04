@@ -9,111 +9,106 @@
 #include <iostream>
 #include <vector>
 
-template<typename T>
-class Hungarian
-{
-    public:
+template <typename T> class Hungarian {
+public:
+  Hungarian(const Hungarian &h);
+  Hungarian(Hungarian &&h) noexcept;
 
-        Hungarian(const Hungarian& h);
-        Hungarian(Hungarian&& h) noexcept;
+  Hungarian(const Matrix<T> &source_matrix);
+  Hungarian(Matrix<T> &&source_matrix);
 
-        Hungarian(const Matrix<T>& source_matrix);
-        Hungarian(Matrix<T>&& source_matrix);
+  virtual ~Hungarian();
 
-        virtual ~Hungarian();
+private:
+  struct HungarianNotation {
+    T value{};
+    bool is_covered_as_row{false};
+    bool is_covered_as_col{false};
+    bool is_starred{false};
+    bool is_primed{false};
 
-    private:
+    friend std::ostream &
+    operator<<(std::ostream &out,
+               HungarianNotation &hn) // silence compiler error
+    {
+      out << "operator<< for struct HungarianNotation is only defined to "
+             "silence a compiler error";
+      return out;
+    }
+  };
 
-        struct HungarianNotation
-        {
-            T value{};
-            bool is_covered_as_row{ false };
-            bool is_covered_as_col{ false };
-            bool is_starred{ false };
-            bool is_primed{ false };
+  struct Location2D {
+    size_t row{};
+    size_t col{};
+  };
 
-            friend std::ostream& operator<< (std::ostream& out, HungarianNotation& hn) //silence compiler error
-            {
-                out << "operator<< for struct HungarianNotation is only defined to silence a compiler error";
-                return out;
-            }
-        };
+  struct Value2D {
+    T value{};
+    Location2D location{};
+  };
 
-        struct Location2D
-        {
-            size_t row{};
-            size_t col{};
-        };
+  struct Solution {
+    T sum{0};
+    std::vector<Value2D> values;
+  };
 
-        struct Value2D
-        {
-            T value{};
-            Location2D location{};
-        };
+private:
+  Matrix<HungarianNotation> m_mx_og;
+  Matrix<HungarianNotation> m_mx_wrk;
 
-        struct Solution
-        {
-            T sum{ 0 };
-            std::vector<Value2D> values;
-        };
+  T m_smallest_uncovered_value_from_S4;
+  Location2D m_primed_zero_from_S4;
 
-    private:
+  int m_next_step;
 
-        Matrix<HungarianNotation> m_mx_og;
-        Matrix<HungarianNotation> m_mx_wrk;
+  bool m_is_solved;
+  Solution m_solution;
 
-        T m_smallest_uncovered_value_from_S4;
-        Location2D m_primed_zero_from_S4;
+public:
+  void Solve();
 
-        int m_next_step;
+  virtual void PrintSolution(std::ostream &out) const;
 
-        bool m_is_solved;
-        Solution m_solution;
+  void PrintLines() const;
 
-    public:
+  void PrintStars() const;
 
-        void Solve();
+  void PrintPrimes() const;
 
-        virtual void PrintSolution(std::ostream& out) const;
+public:
+  Hungarian<T> &operator=(const Hungarian<T> &h);
+  Hungarian<T> &operator=(Hungarian<T> &&h) noexcept;
 
-        void PrintLines() const;
+  template <typename U>
+  friend std::ostream &operator<<(std::ostream &out, const Hungarian<U> &h);
 
-        void PrintStars() const;
+private:
+  Matrix<HungarianNotation>
+  SimpleMatrixToHungarianMatrix(const Matrix<T> &simple_matrix);
+  bool MatrixIsSquare() const;
 
-        void PrintPrimes() const;
+protected:
+  virtual void Step1();
 
-    public:
+  virtual void Step2();
 
-        Hungarian<T>& operator= (const Hungarian<T>& h);
-        Hungarian<T>& operator= (Hungarian<T>&& h) noexcept;
+  virtual void Step3();
 
-        template<typename U>
-        friend std::ostream& operator<< (std::ostream& out, const Hungarian<U>& h);
+  virtual void Step4();
 
-    private:
+  virtual void Step5();
 
-        Matrix<HungarianNotation> SimpleMatrixToHungarianMatrix(const Matrix<T>& simple_matrix);
-        bool MatrixIsSquare() const;
+  void FindStarredZeroInCol(Location2D &cur_pos,
+                            std::vector<Location2D> &zeroes_in_series,
+                            int &next_step_in_series);
 
-    protected:
+  void FindPrimedZeroInRow(Location2D &cur_pos,
+                           std::vector<Location2D> &zeroes_in_series,
+                           int &next_step_in_series);
 
-        virtual void Step1();
+  virtual void Step6();
 
-        virtual void Step2();
-
-        virtual void Step3();
-
-        virtual void Step4();
-
-        virtual void Step5();
-
-        void FindStarredZeroInCol(Location2D& cur_pos, std::vector<Location2D>& zeroes_in_series, int& next_step_in_series);
-
-        void FindPrimedZeroInRow(Location2D& cur_pos, std::vector<Location2D>& zeroes_in_series, int& next_step_in_series);
-
-        virtual void Step6();
-
-        virtual void Step7();
+  virtual void Step7();
 };
 
 #include "hungarian.tpp"

@@ -8,51 +8,45 @@
 #include <iostream>
 #include <vector>
 
-template<typename T>
-class Matrix
-{
-    public:
+template <typename T> class Matrix {
+public:
+  Matrix();
 
-        Matrix();
+  Matrix(const Matrix &matrix);
 
-        Matrix(const Matrix& matrix);
+  Matrix(Matrix &&matrix) noexcept;
 
-        Matrix(Matrix&& matrix) noexcept;
+  Matrix(const size_t rows, const size_t cols);
 
-        Matrix(const size_t rows, const size_t cols);
+  Matrix(const std::initializer_list<std::initializer_list<T>> &init_list);
 
-        Matrix(const std::initializer_list<std::initializer_list<T>>& init_list);
+  Matrix(const std::vector<std::vector<T>> &vector);
 
-        Matrix(const std::vector<std::vector<T>>& vector);
+  ~Matrix();
 
-        ~Matrix();
+private:
+  size_t m_rows;
+  size_t m_cols;
+  T **m_data;
 
-    private:
+public:
+  void Resize(const size_t rows, const size_t cols);
 
-        size_t m_rows;
-        size_t m_cols;
-        T** m_data;
+  void Clear();
 
-    public:
+  size_t GetRows() const;
 
-        void Resize(const size_t rows, const size_t cols);
+  size_t GetCols() const;
 
-        void Clear();
+public:
+  Matrix<T> &operator=(const Matrix<T> &m);
+  Matrix<T> &operator=(Matrix<T> &&m) noexcept;
 
-        size_t GetRows() const;
+  T &operator()(const size_t row, const size_t col);
+  const T &operator()(const size_t row, const size_t cols) const;
 
-        size_t GetCols() const;
-
-    public:
-
-        Matrix<T>& operator= (const Matrix<T>& m);
-        Matrix<T>& operator= (Matrix<T>&& m) noexcept;
-
-        T& operator() (const size_t row, const size_t col);
-        const T& operator() (const size_t row, const size_t cols) const;
-
-        template<typename U>
-        friend std::ostream& operator<< (std::ostream& out, const Matrix<U>& m);
+  template <typename U>
+  friend std::ostream &operator<<(std::ostream &out, const Matrix<U> &m);
 };
 
 #include "matrix.tpp"

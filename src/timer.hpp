@@ -5,36 +5,30 @@
 
 #include <chrono>
 
-class Timer
-{
-    public:
+class Timer {
+public:
+  Timer();
 
-        Timer();
+  Timer(const Timer &t);
+  Timer(Timer &&t);
 
-        Timer(const Timer& t);
-        Timer(Timer&& t);
+  ~Timer();
 
-        ~Timer();
+private:
+  using clock_t = std::chrono::steady_clock;
+  using second_t = std::chrono::duration<double, std::ratio<1>>;
 
-    private:
+private:
+  std::chrono::time_point<clock_t> m_beg;
 
-        using clock_t = std::chrono::steady_clock;
-        using second_t = std::chrono::duration<double, std::ratio<1>>;
+public:
+  void Reset();
 
-    private:
+  double Elapsed() const;
 
-        std::chrono::time_point<clock_t> m_beg;
-
-    public:
-
-        void Reset();
-
-        double Elapsed() const;
-
-    public:
-
-        Timer& operator= (const Timer& t);
-        Timer& operator= (Timer&& t);
+public:
+  Timer &operator=(const Timer &t);
+  Timer &operator=(Timer &&t);
 };
 
 #endif

@@ -8,51 +8,43 @@
 #include <iostream>
 #include <vector>
 
-class Benchmark
-{
-    public:
+class Benchmark {
+public:
+  Benchmark(const int num_of_steps);
+  Benchmark(const Benchmark &other);
+  Benchmark(Benchmark &&other);
 
-        Benchmark(const int num_of_steps);
-        Benchmark(const Benchmark& other);
-        Benchmark(Benchmark&& other);
+  ~Benchmark();
 
-        ~Benchmark();
+private:
+  struct StepTime {
+    int step_id{};
+    Timer current_time{};
+    int times_run{};
+    double total_time{};
+    double average_time{};
+  };
 
-    private:
+private:
+  int m_number_of_steps;
+  double m_total_time;
+  std::vector<StepTime> m_time_by_step;
 
-        struct StepTime
-        {
-            int step_id{};
-            Timer current_time{};
-            int times_run{};
-            double total_time{};
-            double average_time{};
-        };
+public:
+  void Start(const int step_id);
 
-    private:
+  void Stop(const int step_id);
 
-        int m_number_of_steps;
-        double m_total_time;
-        std::vector<StepTime> m_time_by_step;
+  void PrintReport() const;
 
-    public:
+public:
+  Benchmark &operator=(const Benchmark &bm);
+  Benchmark &operator=(Benchmark &&bm);
 
-        void Start(const int step_id);
+  friend std::ostream &operator<<(std::ostream &out, const Benchmark &bm);
 
-        void Stop(const int step_id);
-
-        void PrintReport() const;
-
-    public:
-
-        Benchmark& operator= (const Benchmark& bm);
-        Benchmark& operator= (Benchmark&& bm);
-
-        friend std::ostream& operator<< (std::ostream& out, const Benchmark& bm);
-
-    private:
-
-        void CalcTotalTime();
+private:
+  void CalcTotalTime();
 };
 
 #endif
