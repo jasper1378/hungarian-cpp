@@ -113,12 +113,8 @@ void Matrix<T>::Resize(const size_t rows, const size_t cols) {
     m_cols = cols;
 
     Clear();
-  }
-
-  else {
-    T **new_data;
-
-    new_data = new T *[rows];
+  } else {
+    T **new_data{new T *[rows]};
     for (size_t cur_row{0}; cur_row < rows; ++cur_row) {
       new_data[cur_row] = new T[cols];
 
@@ -136,19 +132,17 @@ void Matrix<T>::Resize(const size_t rows, const size_t cols) {
       }
     }
 
-    if (m_data != nullptr) {
-      for (size_t i{0}; i < m_rows; ++i) {
-        delete[] m_data[i];
-      }
-
-      delete[] m_data;
+    for (size_t i{0}; i < m_rows; ++i) {
+      delete[] m_data[i];
     }
 
-    m_data = new_data;
-  }
+    delete[] m_data;
 
-  m_rows = rows;
-  m_cols = cols;
+    m_data = new_data;
+
+    m_rows = rows;
+    m_cols = cols;
+  }
 }
 
 template <typename T> void Matrix<T>::Clear() {

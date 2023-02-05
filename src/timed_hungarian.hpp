@@ -12,10 +12,10 @@
 template <typename T> class TimedHungarian : public Hungarian<T> {
 public:
   TimedHungarian(const TimedHungarian &th);
-  TimedHungarian(TimedHungarian &&th);
+  TimedHungarian(TimedHungarian &&th) noexcept;
 
-  TimedHungarian(const Matrix<T> &source_matrix);
-  TimedHungarian(Matrix<T> &&source_matrix);
+  explicit TimedHungarian(const Matrix<T> &source_matrix);
+  explicit TimedHungarian(Matrix<T> &&source_matrix);
 
   ~TimedHungarian() override;
 
@@ -27,7 +27,7 @@ public:
 
 public:
   TimedHungarian<T> &operator=(const TimedHungarian<T> &th);
-  TimedHungarian<T> &operator=(TimedHungarian<T> &&th);
+  TimedHungarian<T> &operator=(TimedHungarian<T> &&th) noexcept;
 
 private:
   void Step1() override;

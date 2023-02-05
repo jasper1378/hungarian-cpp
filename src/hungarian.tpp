@@ -47,7 +47,7 @@ Hungarian<T>::Hungarian(const Matrix<T> &source_matrix)
 
 template <typename T>
 Hungarian<T>::Hungarian(Matrix<T> &&source_matrix)
-    : m_mx_og{SimpleMatrixToHungarianMatrix(std::move(source_matrix))},
+    : m_mx_og{SimpleMatrixToHungarianMatrix(source_matrix)},
       m_mx_wrk{SimpleMatrixToHungarianMatrix(std::move(source_matrix))},
       m_smallest_uncovered_value_from_S4{static_cast<T>(INFINITY)},
       m_primed_zero_from_S4{Location2D{0, 0}}, m_next_step{1}, m_is_solved{
@@ -159,10 +159,10 @@ template <typename T> void Hungarian<T>::PrintLines() const {
 }
 
 template <typename T> void Hungarian<T>::PrintStars() const {
-  const std::string red{"\033[41m"};
-  const std::string green{"\033[42m"};
-  const std::string blue{"\033[44m"};
-  const std::string reset_color{"\033[0m"};
+  static const std::string red{"\033[41m"};
+  static const std::string green{"\033[42m"};
+  static const std::string blue{"\033[44m"};
+  static const std::string reset_color{"\033[0m"};
 
   std::cout << "\nStars\n";
 
@@ -298,7 +298,6 @@ template <typename T> void Hungarian<T>::Step1() {
   }
 
   m_next_step = 2;
-  return;
 }
 
 template <typename T> void Hungarian<T>::Step2() {
@@ -333,7 +332,6 @@ template <typename T> void Hungarian<T>::Step2() {
   }
 
   m_next_step = 3;
-  return;
 }
 
 template <typename T> void Hungarian<T>::Step3() {
@@ -359,8 +357,6 @@ template <typename T> void Hungarian<T>::Step3() {
   } else {
     m_next_step = 4;
   }
-
-  return;
 }
 
 template <typename T> void Hungarian<T>::Step4() {
@@ -391,7 +387,7 @@ RestartSearchForUncoveredZero:;
           if (starred_zero_exists_in_row_containing_prime == false) {
             m_next_step = 5;
             return;
-          } else if (starred_zero_exists_in_row_containing_prime == true) {
+          } else {
             for (size_t other_col{0}; other_col < m_mx_wrk.GetCols();
                  ++other_col) {
               m_mx_wrk(starred_zero.row, other_col).is_covered_as_row = true;
@@ -423,7 +419,6 @@ RestartSearchForUncoveredZero:;
   }
 
   m_next_step = 6;
-  return;
 }
 
 template <typename T> void Hungarian<T>::Step5() {
@@ -466,8 +461,6 @@ template <typename T> void Hungarian<T>::Step5() {
   }
 
   m_next_step = 3;
-
-  return;
 }
 
 template <typename T>
@@ -491,11 +484,9 @@ void Hungarian<T>::FindStarredZeroInCol(
 
   if (starred_zero_exists_in_col == true) {
     next_step_in_series = 2;
-  } else if (starred_zero_exists_in_col == false) {
+  } else {
     next_step_in_series = -1;
   }
-
-  return;
 }
 
 template <typename T>
@@ -514,8 +505,6 @@ void Hungarian<T>::FindPrimedZeroInRow(
   }
 
   next_step_in_series = 1;
-
-  return;
 }
 
 template <typename T> void Hungarian<T>::Step6() {
@@ -532,7 +521,6 @@ template <typename T> void Hungarian<T>::Step6() {
   }
 
   m_next_step = 4;
-  return;
 }
 
 template <typename T> void Hungarian<T>::Step7() {
@@ -552,8 +540,6 @@ template <typename T> void Hungarian<T>::Step7() {
   }
 
   m_next_step = 0;
-
-  return;
 }
 
 #endif

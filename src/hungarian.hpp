@@ -14,8 +14,8 @@ public:
   Hungarian(const Hungarian &h);
   Hungarian(Hungarian &&h) noexcept;
 
-  Hungarian(const Matrix<T> &source_matrix);
-  Hungarian(Matrix<T> &&source_matrix);
+  explicit Hungarian(const Matrix<T> &source_matrix);
+  explicit Hungarian(Matrix<T> &&source_matrix);
 
   virtual ~Hungarian();
 

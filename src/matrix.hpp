@@ -20,7 +20,7 @@ public:
 
   Matrix(const std::initializer_list<std::initializer_list<T>> &init_list);
 
-  Matrix(const std::vector<std::vector<T>> &vector);
+  explicit Matrix(const std::vector<std::vector<T>> &vector);
 
   ~Matrix();
 
