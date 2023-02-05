@@ -21,31 +21,31 @@ Benchmark::Benchmark(const Benchmark &other)
     : m_number_of_steps{other.m_number_of_steps},
       m_total_time{other.m_total_time}, m_time_by_step{other.m_time_by_step} {}
 
-Benchmark::Benchmark(Benchmark &&other)
-    : m_number_of_steps{std::move(other.m_number_of_steps)},
-      m_total_time{std::move(other.m_total_time)}, m_time_by_step{std::move(
-                                                       other.m_time_by_step)} {}
+Benchmark::Benchmark(Benchmark &&other) noexcept
+    : m_number_of_steps{other.m_number_of_steps},
+      m_total_time{other.m_total_time}, m_time_by_step{
+                                            std::move(other.m_time_by_step)} {}
 
 Benchmark::~Benchmark() {}
 
 void Benchmark::Start(const int step_id) {
-  if ((step_id > m_number_of_steps) && (step_id < m_number_of_steps)) {
+  if ((step_id > m_number_of_steps) && (step_id <= 0)) {
     throw std::out_of_range{"invalid step_id when trying to start step timer"};
   }
 
-  int cur_step{step_id - 1};
+  const int cur_step{step_id - 1};
 
   m_time_by_step[cur_step].current_time.Reset();
 }
 
 void Benchmark::Stop(const int step_id) {
-  if ((step_id > m_number_of_steps) && (step_id < m_number_of_steps)) {
+  if ((step_id > m_number_of_steps) && (step_id <= 0)) {
     throw std::out_of_range{"invalid step_id when trying to stop step timer"};
   }
 
-  int cur_step{step_id - 1};
+  const int cur_step{step_id - 1};
 
-  double time_for_step{m_time_by_step[cur_step].current_time.Elapsed()};
+  const double time_for_step{m_time_by_step[cur_step].current_time.Elapsed()};
 
   ++m_time_by_step[cur_step].times_run;
   m_time_by_step[cur_step].total_time += time_for_step;
@@ -67,13 +67,13 @@ Benchmark &Benchmark::operator=(const Benchmark &bm) {
   return *this;
 }
 
-Benchmark &Benchmark::operator=(Benchmark &&bm) {
+Benchmark &Benchmark::operator=(Benchmark &&bm) noexcept {
   if (this == &bm) {
     return *this;
   }
 
-  m_number_of_steps = std::move(bm.m_number_of_steps);
-  m_total_time = std::move(bm.m_total_time);
+  m_number_of_steps = bm.m_number_of_steps;
+  m_total_time = bm.m_total_time;
   m_time_by_step = std::move(bm.m_time_by_step);
 
   return *this;

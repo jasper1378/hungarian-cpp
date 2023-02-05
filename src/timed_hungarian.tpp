@@ -17,7 +17,7 @@ TimedHungarian<T>::TimedHungarian(const TimedHungarian &th)
     : Hungarian<T>{th}, m_benchmark{th.m_benchmark} {}
 
 template <typename T>
-TimedHungarian<T>::TimedHungarian(TimedHungarian &&th)
+TimedHungarian<T>::TimedHungarian(TimedHungarian &&th) noexcept
     : Hungarian<T>{std::move(th)}, m_benchmark{std::move(th.m_benchmark)} {}
 
 template <typename T>
@@ -50,7 +50,8 @@ TimedHungarian<T> &TimedHungarian<T>::operator=(const TimedHungarian<T> &th) {
 }
 
 template <typename T>
-TimedHungarian<T> &TimedHungarian<T>::operator=(TimedHungarian<T> &&th) {
+TimedHungarian<T> &
+TimedHungarian<T>::operator=(TimedHungarian<T> &&th) noexcept {
   if (this == &th) {
     return *this;
   }

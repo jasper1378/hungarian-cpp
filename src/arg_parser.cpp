@@ -80,7 +80,7 @@ std::ostream &operator<<(std::ostream &out, const ArgParser &ap) {
     out << "Short name: " << ap.m_args[cur_arg].name.short_name << '\n';
     out << "Long name: " << ap.m_args[cur_arg].name.long_name << '\n';
     out << "Value: "
-        << ((ap.m_args[cur_arg].value == "")
+        << ((ap.m_args[cur_arg].value.empty() == true)
                 ? ("arg does not need a value")
                 : (ap.m_args[cur_arg].name.short_name))
         << '\n';
@@ -92,7 +92,7 @@ std::ostream &operator<<(std::ostream &out, const ArgParser &ap) {
 
 void ArgParser::Init(const int argc, char **argv) {
   for (char **cur_arg_ptr{argv}; cur_arg_ptr != (argv + argc); ++cur_arg_ptr) {
-    std::string cur_arg{*cur_arg_ptr};
+    const std::string cur_arg{*cur_arg_ptr};
 
     bool arg_matches_a_valid_name{false};
 
@@ -105,10 +105,8 @@ void ArgParser::Init(const int argc, char **argv) {
         if (m_valid_names[cur_valid_name].needs_value == false) {
           m_args.push_back({m_valid_names[cur_valid_name].name, ""});
           break;
-        } else if (m_valid_names[cur_valid_name].needs_value == true) {
-          if ((cur_arg_ptr + 1) != (argv + argc))
-
-          {
+        } else {
+          if ((cur_arg_ptr + 1) != (argv + argc)) {
             for (size_t comparison_valid_name{0};
                  comparison_valid_name < m_valid_names.size();
                  ++comparison_valid_name) {

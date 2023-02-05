@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   using data_t = signed long long int;
 
   try {
-    const std::vector<ArgParser::ValidName> valid_names{
+    std::vector<ArgParser::ValidName> valid_names{
         {{"hungarian-cpp", "./hungarian-cpp"}, false},
         {{"-h", "--help"}, false},
         {{"-bm", "--benchmark"}, false},
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         {{"-si", "--standard-input"}, false},
         {{"-rm", "--random-matrix"}, true},
         {{"../hungarian-cpp", "TEMPORARY"}, false}};
-    ArgParser arg_parser{argc, argv, std::move(valid_names)};
+    const ArgParser arg_parser{argc, argv, std::move(valid_names)};
 
     if (arg_parser.ArgExists("-h")) {
       PrintHelp();

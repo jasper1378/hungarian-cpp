@@ -10,9 +10,9 @@
 
 class Benchmark {
 public:
-  Benchmark(const int num_of_steps);
+  explicit Benchmark(const int num_of_steps);
   Benchmark(const Benchmark &other);
-  Benchmark(Benchmark &&other);
+  Benchmark(Benchmark &&other) noexcept;
 
   ~Benchmark();
 
@@ -39,7 +39,7 @@ public:
 
 public:
   Benchmark &operator=(const Benchmark &bm);
-  Benchmark &operator=(Benchmark &&bm);
+  Benchmark &operator=(Benchmark &&bm) noexcept;
 
   friend std::ostream &operator<<(std::ostream &out, const Benchmark &bm);
 
