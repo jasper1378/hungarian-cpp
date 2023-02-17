@@ -21,20 +21,12 @@ double Timer::Elapsed() const {
 }
 
 Timer &Timer::operator=(const Timer &t) {
-  if (this == &t) {
-    return *this;
-  }
-
   m_beg = t.m_beg;
 
   return *this;
 }
 
 Timer &Timer::operator=(Timer &&t) noexcept {
-  if (this == &t) {
-    return *this;
-  }
-
   m_beg = t.m_beg;
 
   return *this;

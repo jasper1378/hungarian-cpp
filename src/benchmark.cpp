@@ -56,10 +56,6 @@ void Benchmark::Stop(const int step_id) {
 }
 
 Benchmark &Benchmark::operator=(const Benchmark &bm) {
-  if (this == &bm) {
-    return *this;
-  }
-
   m_number_of_steps = bm.m_number_of_steps;
   m_total_time = bm.m_total_time;
   m_time_by_step = bm.m_time_by_step;
