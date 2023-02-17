@@ -54,10 +54,6 @@ std::string ArgParser::GetValue(const std::string &name) const {
 }
 
 ArgParser &ArgParser::operator=(const ArgParser &ap) {
-  if (this == &ap) {
-    return *this;
-  }
-
   m_args = ap.m_args;
   m_valid_names = ap.m_valid_names;
 

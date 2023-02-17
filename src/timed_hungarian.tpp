@@ -38,10 +38,6 @@ void TimedHungarian<T>::PrintSolution(std::ostream &out) const {
 
 template <typename T>
 TimedHungarian<T> &TimedHungarian<T>::operator=(const TimedHungarian<T> &th) {
-  if (this == &th) {
-    return *this;
-  }
-
   Hungarian<T>::operator=(th);
 
   m_benchmark = th.m_benchmark;
@@ -52,10 +48,6 @@ TimedHungarian<T> &TimedHungarian<T>::operator=(const TimedHungarian<T> &th) {
 template <typename T>
 TimedHungarian<T> &
 TimedHungarian<T>::operator=(TimedHungarian<T> &&th) noexcept {
-  if (this == &th) {
-    return *this;
-  }
-
   Hungarian<T>::operator=(std::move(th));
 
   m_benchmark = std::move(th.m_benchmark);
