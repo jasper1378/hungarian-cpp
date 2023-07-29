@@ -3,16 +3,20 @@
 
 BIN_NAME := hungarian-cpp
 CXX := g++
-COMPILE_FLAGS := -std=c++17 -Wall -Wextra -g
-RELEASE_COMPILE_FLAGS := -O3
-DEBUG_COMPILE_FLAGS := -Og
+COMPILE_FLAGS := -std=c++20 -Wall -Wextra -g
+RELEASE_COMPILE_FLAGS := -O2 -DNDEBUG
+DEBUG_COMPILE_FLAGS := -Og -DDEBUG
 LINK_FLAGS :=
 RELEASE_LINK_FLAGS :=
 DEBUG_LINK_FLAGS :=
 SOURCE_DIRS := ./src
-INCLUDE_DIRS := $(SOURCE_DIRS)
+SUBMODULE_DIR := ./submodules
+INCLUDE_DIRS := ./include $(wildcard $(SUBMODULE_DIR)/*/include)
 LIBRARIES :=
-INSTALL_PATH := /usr/local/bin
+SUBMODULE_OBJECTS := $(wildcard $(SUBMODULE_DIR)/*/build/*.a)
+INSTALL_PATH := /usr/local
+
+BIN_INSTALL_PATH := $(INSTALL_PATH)/bin
 
 export BUILD_DIR := ./build
 
@@ -46,7 +50,7 @@ debug:
 all: $(BUILD_DIR)/$(BIN_NAME)
 
 $(BUILD_DIR)/$(BIN_NAME): $(OBJECTS)
-	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
+	$(CXX) $(OBJECTS) $(SUBMODULE_OBJECTS) $(LDFLAGS) -o $@
 
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	@mkdir -p $(dir $@)
@@ -56,11 +60,11 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 
 .PHONY: install
 install:
-	@install -v -Dm755 $(BUILD_DIR)/$(BIN_NAME) -t $(INSTALL_PATH)/
+	@install -v -Dm755 $(BUILD_DIR)/$(BIN_NAME) -t $(BIN_INSTALL_PATH)/
 
 .PHONY: uninstall
 uninstall:
-	@rm -v $(INSTALL_PATH)/$(BIN_NAME)
+	@rm -v $(BIN_INSTALL_PATH)/$(BIN_NAME)
 
 .PHONY: clean
 clean:
