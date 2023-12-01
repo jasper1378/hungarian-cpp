@@ -87,7 +87,8 @@ std::ostream &operator<<(std::ostream &out, const ArgParser &ap) {
 }
 
 void ArgParser::Init(const int argc, char **argv) {
-  for (char **cur_arg_ptr{argv}; cur_arg_ptr != (argv + argc); ++cur_arg_ptr) {
+  for (char **cur_arg_ptr{argv + 1}; cur_arg_ptr != (argv + argc);
+       ++cur_arg_ptr) {
     const std::string cur_arg{*cur_arg_ptr};
 
     bool arg_matches_a_valid_name{false};

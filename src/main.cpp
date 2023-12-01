@@ -21,13 +21,11 @@ int main(int argc, char *argv[]) {
 
   try {
     std::vector<ArgParser::ValidName> valid_names{
-        {{"hungarian-cpp", "./hungarian-cpp"}, false},
         {{"-h", "--help"}, false},
         {{"-bm", "--benchmark"}, false},
         {{"-if", "--input-file"}, true},
         {{"-si", "--standard-input"}, false},
-        {{"-rm", "--random-matrix"}, true},
-        {{"../hungarian-cpp", "TEMPORARY"}, false}};
+        {{"-rm", "--random-matrix"}, true}};
     const ArgParser arg_parser{argc, argv, std::move(valid_names)};
 
     if (arg_parser.ArgExists("-h")) {
@@ -44,8 +42,13 @@ int main(int argc, char *argv[]) {
     } else if (arg_parser.ArgExists("-si")) {
       matrix = ReadMatrixFromStdin<data_t>();
     } else if (arg_parser.ArgExists("-rm")) {
-      matrix =
-          GenerateRandomMatrix<data_t>(std::stoi(arg_parser.GetValue("-rm")));
+      int size = std::stoi(arg_parser.GetValue("-rm"));
+      if (size <= 0) {
+        throw std::runtime_error{"size should be a positive integer"};
+      } else {
+        matrix =
+            GenerateRandomMatrix<data_t>(std::stoi(arg_parser.GetValue("-rm")));
+      }
     } else {
       throw std::runtime_error{
           "please specify an operation, try \"hungarian-cpp --help\""};
