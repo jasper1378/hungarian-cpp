@@ -87,7 +87,8 @@ std::ostream &operator<<(std::ostream &out, const ArgParser &ap) {
 }
 
 void ArgParser::Init(const int argc, char **argv) {
-  for (char **cur_arg_ptr{argv}; cur_arg_ptr != (argv + argc); ++cur_arg_ptr) {
+  for (char **cur_arg_ptr{argv + 1}; cur_arg_ptr != (argv + argc);
+       ++cur_arg_ptr) {
     const std::string cur_arg{*cur_arg_ptr};
 
     bool arg_matches_a_valid_name{false};
@@ -110,11 +111,9 @@ void ArgParser::Init(const int argc, char **argv) {
                     m_valid_names[comparison_valid_name].name.short_name)) ||
                   ((static_cast<std::string>(*(cur_arg_ptr + 1)) ==
                     m_valid_names[comparison_valid_name].name.long_name))) {
-                // throw std::runtime_error{ "option: " + cur_arg + " is missing
-                // required argument, try \"hungarian-cpp --help\"" };
-                std::cerr << "Option: " << cur_arg
-                          << " is missing required argument, try "
-                             "\"hungarian-cpp --help\"\n";
+                throw std::runtime_error{std::string{} + "Option: " + cur_arg +
+                                         " is missing required argument, try "
+                                         "\"hungarian-cpp --help\""};
                 break;
               }
             }
@@ -124,11 +123,10 @@ void ArgParser::Init(const int argc, char **argv) {
             ++cur_arg_ptr;
             break;
           } else {
-            // throw std::runtime_error{ "option: " + cur_arg + " is missing
-            // required argument, try \"hungarian-cpp --help\"" };
-            std::cerr << "Option: " << cur_arg
-                      << " is missing required argument, try \"hungarian-cpp "
-                         "--help\"\n";
+            throw std::runtime_error{
+                std::string{} + "Option: " + cur_arg +
+                " is missing required argument, try \"hungarian-cpp "
+                "--help\""};
             break;
           }
         }
@@ -136,10 +134,8 @@ void ArgParser::Init(const int argc, char **argv) {
     }
 
     if (arg_matches_a_valid_name == false) {
-      // throw std::runtime_error{ "incorrect option: " + cur_arg + ", try
-      // \"hungarian-cpp --help\"" };
-      std::cerr << "Incorrect option: " << cur_arg
-                << ", try \"hungarian-cpp --help\"\n";
+      throw std::runtime_error{std::string{} + "Incorrect option: " + cur_arg +
+                               ", try \"hungarian-cpp --help\""};
     }
   }
 }
