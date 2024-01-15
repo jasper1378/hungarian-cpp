@@ -1,4 +1,4 @@
-BIN_NAME := hungarian-cpp
+BIN_NAME := hello_world
 VERSION_MAJOR := 0
 VERSION_MINOR := 0
 CXX := g++
