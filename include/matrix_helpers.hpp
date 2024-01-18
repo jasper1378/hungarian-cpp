@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef MATRIX_HELPERS_HPP
-#define MATRIX_HELPERS_HPP
+#ifndef HUNGARIAN_CPP_MATRIX_HELPERS_HPP
+#define HUNGARIAN_CPP_MATRIX_HELPERS_HPP
 
 #include "matrix.hpp"
 #include "random.hpp"

@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef TIMED_HUNGARIAN_HPP
-#define TIMED_HUNGARIAN_HPP
+#ifndef HUNGARIAN_CPP_TIMED_HUNGARIAN_HPP
+#define HUNGARIAN_CPP_TIMED_HUNGARIAN_HPP
 
 #include "benchmark.hpp"
 #include "hungarian.hpp"

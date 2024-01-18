@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef ARG_PARSER_HPP
-#define ARG_PARSER_HPP
+#ifndef HUNGARIAN_CPP_ARG_PARSER_HPP
+#define HUNGARIAN_CPP_ARG_PARSER_HPP
 
 #include <iostream>
 #include <string>

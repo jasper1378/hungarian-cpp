@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef BENCHMARK_HPP
-#define BENCHMARK_HPP
+#ifndef HUNGARIAN_CPP_BENCHMARK_HPP
+#define HUNGARIAN_CPP_BENCHMARK_HPP
 
 #include "timer.hpp"
 

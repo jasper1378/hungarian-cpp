@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
+#ifndef HUNGARIAN_CPP_MATRIX_HPP
+#define HUNGARIAN_CPP_MATRIX_HPP
 
 #include <cstddef>
 #include <exception>
