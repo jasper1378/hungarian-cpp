@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef RANDOM_HPP
-#define RANDOM_HPP
+#ifndef HUNGARIAN_CPP_RANDOM_HPP
+#define HUNGARIAN_CPP_RANDOM_HPP
 
 template <typename T> T GenerateRandomNum(int n) {
   if (n == 0) {

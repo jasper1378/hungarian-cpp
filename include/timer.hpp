@@ -1,7 +1,5 @@
-/* vim: set filetype=cpp : */
-
-#ifndef TIMER_HPP
-#define TIMER_HPP
+#ifndef HUNGARIAN_CPP_TIMER_HPP
+#define HUNGARIAN_CPP_TIMER_HPP
 
 #include <chrono>
 
