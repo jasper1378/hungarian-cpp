@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 class ArgParser {
@@ -39,9 +40,9 @@ private:
   std::vector<ValidName> m_valid_names;
 
 public:
-  bool ArgExists(const std::string &name) const;
+  bool ArgExists(const std::string_view name) const;
 
-  std::string GetValue(const std::string &name) const;
+  std::string GetValue(const std::string_view name) const;
 
 public:
   ArgParser &operator=(const ArgParser &ap);

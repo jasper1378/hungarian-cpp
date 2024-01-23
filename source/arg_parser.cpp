@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -31,7 +32,7 @@ ArgParser::ArgParser(ArgParser &&ap) noexcept
 
 ArgParser::~ArgParser() {}
 
-bool ArgParser::ArgExists(const std::string &name) const {
+bool ArgParser::ArgExists(const std::string_view name) const {
   for (size_t cur_arg{0}; cur_arg < m_args.size(); ++cur_arg) {
     if ((name == m_args[cur_arg].name.short_name) ||
         (name == m_args[cur_arg].name.long_name)) {
@@ -42,7 +43,7 @@ bool ArgParser::ArgExists(const std::string &name) const {
   return false;
 }
 
-std::string ArgParser::GetValue(const std::string &name) const {
+std::string ArgParser::GetValue(const std::string_view name) const {
   for (size_t cur_arg{0}; cur_arg < m_args.size(); ++cur_arg) {
     if ((name == m_args[cur_arg].name.short_name) ||
         (name == m_args[cur_arg].name.long_name)) {
