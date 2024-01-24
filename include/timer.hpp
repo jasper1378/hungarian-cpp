@@ -3,6 +3,8 @@
 
 #include <chrono>
 
+namespace hungarian_cpp {
+
 class Timer {
 public:
   Timer();
@@ -30,4 +32,5 @@ public:
   Timer &operator=(Timer &&t) noexcept;
 };
 
+} // namespace hungarian_cpp
 #endif

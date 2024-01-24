@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+namespace hungarian_cpp {
+
 template <typename T> T DigitsToNumber(const std::vector<char> &digits) {
   T number{0};
   int current_digit{};
@@ -143,4 +145,5 @@ template <typename T> Matrix<T> GenerateRandomMatrix(const size_t size) {
   return Matrix<T>{matrix};
 }
 
+} // namespace hungarian_cpp
 #endif

@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+namespace hungarian_cpp {
+
 class Benchmark {
 public:
   explicit Benchmark(const int num_of_steps);
@@ -45,4 +47,7 @@ private:
   void CalcTotalTime();
 };
 
+std::ostream &operator<<(std::ostream &out, const Benchmark &bm);
+
+} // namespace hungarian_cpp
 #endif

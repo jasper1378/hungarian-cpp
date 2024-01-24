@@ -6,6 +6,8 @@
 #include <string_view>
 #include <vector>
 
+namespace hungarian_cpp {
+
 class ArgParser {
 public:
   struct ArgName {
@@ -54,4 +56,7 @@ private:
   void Init(const int argc, char **argv);
 };
 
+std::ostream &operator<<(std::ostream &out, const ArgParser &ap);
+
+} // namespace hungarian_cpp
 #endif

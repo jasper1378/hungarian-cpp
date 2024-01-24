@@ -8,6 +8,8 @@
 #include <iostream>
 #include <utility>
 
+namespace hungarian_cpp {
+
 template <typename T> class TimedHungarian : public Hungarian<T> {
 public:
   TimedHungarian(const TimedHungarian &th)
@@ -94,4 +96,5 @@ private:
   }
 };
 
+} // namespace hungarian_cpp
 #endif

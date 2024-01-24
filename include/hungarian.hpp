@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+namespace hungarian_cpp {
+
 template <typename T> class Hungarian {
 public:
   Hungarian(const Hungarian &h)
@@ -577,4 +579,5 @@ protected:
   }
 };
 
+} // namespace hungarian_cpp
 #endif
