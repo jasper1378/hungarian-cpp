@@ -84,7 +84,7 @@ void hungarian_cpp::Benchmark::CalcTotalTime() {
 }
 
 std::ostream &hungarian_cpp::operator<<(std::ostream &out,
-                                        const hungarian_cpp::Benchmark &bm) {
+                                        const Benchmark &bm) {
   out << "Benchmark report:\n";
   out << '\n';
 

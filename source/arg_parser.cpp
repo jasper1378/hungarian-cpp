@@ -130,7 +130,7 @@ void hungarian_cpp::ArgParser::Init(const int argc, char **argv) {
 }
 
 std::ostream &hungarian_cpp::operator<<(std::ostream &out,
-                                        const hungarian_cpp::ArgParser &ap) {
+                                        const ArgParser &ap) {
   for (size_t cur_arg{0}; cur_arg < ap.m_args.size(); ++cur_arg) {
     out << "Short name: " << ap.m_args[cur_arg].name.short_name << '\n';
     out << "Long name: " << ap.m_args[cur_arg].name.long_name << '\n';
