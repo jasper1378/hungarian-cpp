@@ -5,28 +5,28 @@
 #include <chrono>
 #include <utility>
 
-Timer::Timer() : m_beg{clock_type::now()} {}
+hungarian_cpp::Timer::Timer() : m_beg{clock_type::now()} {}
 
-Timer::Timer(const Timer &t) : m_beg{t.m_beg} {}
+hungarian_cpp::Timer::Timer(const Timer &t) : m_beg{t.m_beg} {}
 
-Timer::Timer(Timer &&t) noexcept : m_beg{t.m_beg} {}
+hungarian_cpp::Timer::Timer(Timer &&t) noexcept : m_beg{t.m_beg} {}
 
-Timer::~Timer() {}
+hungarian_cpp::Timer::~Timer() {}
 
-void Timer::Reset() { m_beg = clock_type::now(); }
+void hungarian_cpp::Timer::Reset() { m_beg = clock_type::now(); }
 
-double Timer::Elapsed() const {
+double hungarian_cpp::Timer::Elapsed() const {
   return std::chrono::duration_cast<second_type>(clock_type::now() - m_beg)
       .count();
 }
 
-Timer &Timer::operator=(const Timer &t) {
+hungarian_cpp::Timer &hungarian_cpp::Timer::operator=(const Timer &t) {
   m_beg = t.m_beg;
 
   return *this;
 }
 
-Timer &Timer::operator=(Timer &&t) noexcept {
+hungarian_cpp::Timer &hungarian_cpp::Timer::operator=(Timer &&t) noexcept {
   m_beg = t.m_beg;
 
   return *this;

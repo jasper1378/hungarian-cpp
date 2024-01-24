@@ -20,34 +20,36 @@ int main(int argc, char *argv[]) {
   using data_t = signed long long int;
 
   try {
-    std::vector<ArgParser::ValidName> valid_names{
+    std::vector<hungarian_cpp::ArgParser::ValidName> valid_names{
         {{"-h", "--help"}, false},
         {{"-bm", "--benchmark"}, false},
         {{"-if", "--input-file"}, true},
         {{"-si", "--standard-input"}, false},
         {{"-rm", "--random-matrix"}, true}};
-    const ArgParser arg_parser{argc, argv, std::move(valid_names)};
+    const hungarian_cpp::ArgParser arg_parser{argc, argv,
+                                              std::move(valid_names)};
 
     if (arg_parser.ArgExists("-h")) {
-      PrintHelp();
+      hungarian_cpp::PrintHelp();
       return 0;
     }
 
-    std::unique_ptr<Hungarian<data_t>> hungarian{nullptr};
+    std::unique_ptr<hungarian_cpp::Hungarian<data_t>> hungarian{nullptr};
 
-    Matrix<data_t> matrix;
+    hungarian_cpp::Matrix<data_t> matrix;
 
     if (arg_parser.ArgExists("-if")) {
-      matrix = ReadMatrixFromFile<data_t>(arg_parser.GetValue("-if"));
+      matrix =
+          hungarian_cpp::ReadMatrixFromFile<data_t>(arg_parser.GetValue("-if"));
     } else if (arg_parser.ArgExists("-si")) {
-      matrix = ReadMatrixFromStdin<data_t>();
+      matrix = hungarian_cpp::ReadMatrixFromStdin<data_t>();
     } else if (arg_parser.ArgExists("-rm")) {
       int size = std::stoi(arg_parser.GetValue("-rm"));
       if (size <= 0) {
         throw std::runtime_error{"size should be a positive integer"};
       } else {
-        matrix =
-            GenerateRandomMatrix<data_t>(std::stoi(arg_parser.GetValue("-rm")));
+        matrix = hungarian_cpp::GenerateRandomMatrix<data_t>(
+            std::stoi(arg_parser.GetValue("-rm")));
       }
     } else {
       throw std::runtime_error{
@@ -55,9 +57,11 @@ int main(int argc, char *argv[]) {
     }
 
     if (arg_parser.ArgExists("-bm")) {
-      hungarian = std::make_unique<TimedHungarian<data_t>>(std::move(matrix));
+      hungarian = std::make_unique<hungarian_cpp::TimedHungarian<data_t>>(
+          std::move(matrix));
     } else {
-      hungarian = std::make_unique<Hungarian<data_t>>(std::move(matrix));
+      hungarian =
+          std::make_unique<hungarian_cpp::Hungarian<data_t>>(std::move(matrix));
     }
 
     hungarian->Solve();

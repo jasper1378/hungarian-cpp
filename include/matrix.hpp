@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <vector>
 
+namespace hungarian_cpp {
+
 template <typename T> class Matrix {
 public:
   Matrix() : m_rows{0}, m_cols{0}, m_data{nullptr} {}
@@ -237,4 +239,5 @@ std::ostream &operator<<(std::ostream &out, const Matrix<U> &m) {
   return out;
 }
 
+} // namespace hungarian_cpp
 #endif

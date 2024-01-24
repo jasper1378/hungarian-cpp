@@ -10,25 +10,25 @@
 #include <utility>
 #include <vector>
 
-Benchmark::Benchmark(const int num_of_steps)
+hungarian_cpp::Benchmark::Benchmark(const int num_of_steps)
     : m_number_of_steps{num_of_steps}, m_total_time{0}, m_time_by_step{} {
   for (int i{1}; i <= num_of_steps; ++i) {
     m_time_by_step.push_back(StepTime{i, Timer{}, 0, 0, 0});
   }
 }
 
-Benchmark::Benchmark(const Benchmark &other)
+hungarian_cpp::Benchmark::Benchmark(const Benchmark &other)
     : m_number_of_steps{other.m_number_of_steps},
       m_total_time{other.m_total_time}, m_time_by_step{other.m_time_by_step} {}
 
-Benchmark::Benchmark(Benchmark &&other) noexcept
+hungarian_cpp::Benchmark::Benchmark(Benchmark &&other) noexcept
     : m_number_of_steps{other.m_number_of_steps},
-      m_total_time{other.m_total_time}, m_time_by_step{
-                                            std::move(other.m_time_by_step)} {}
+      m_total_time{other.m_total_time},
+      m_time_by_step{std::move(other.m_time_by_step)} {}
 
-Benchmark::~Benchmark() {}
+hungarian_cpp::Benchmark::~Benchmark() {}
 
-void Benchmark::Start(const int step_id) {
+void hungarian_cpp::Benchmark::Start(const int step_id) {
   if ((step_id > m_number_of_steps) && (step_id <= 0)) {
     throw std::out_of_range{"invalid step_id when trying to start step timer"};
   }
@@ -38,7 +38,7 @@ void Benchmark::Start(const int step_id) {
   m_time_by_step[cur_step].current_time.Reset();
 }
 
-void Benchmark::Stop(const int step_id) {
+void hungarian_cpp::Benchmark::Stop(const int step_id) {
   if ((step_id > m_number_of_steps) && (step_id <= 0)) {
     throw std::out_of_range{"invalid step_id when trying to stop step timer"};
   }
@@ -55,7 +55,8 @@ void Benchmark::Stop(const int step_id) {
   CalcTotalTime();
 }
 
-Benchmark &Benchmark::operator=(const Benchmark &bm) {
+hungarian_cpp::Benchmark &
+hungarian_cpp::Benchmark::operator=(const Benchmark &bm) {
   m_number_of_steps = bm.m_number_of_steps;
   m_total_time = bm.m_total_time;
   m_time_by_step = bm.m_time_by_step;
@@ -63,7 +64,8 @@ Benchmark &Benchmark::operator=(const Benchmark &bm) {
   return *this;
 }
 
-Benchmark &Benchmark::operator=(Benchmark &&bm) noexcept {
+hungarian_cpp::Benchmark &
+hungarian_cpp::Benchmark::operator=(Benchmark &&bm) noexcept {
   if (this == &bm) {
     return *this;
   }
@@ -75,7 +77,14 @@ Benchmark &Benchmark::operator=(Benchmark &&bm) noexcept {
   return *this;
 }
 
-std::ostream &operator<<(std::ostream &out, const Benchmark &bm) {
+void hungarian_cpp::Benchmark::CalcTotalTime() {
+  for (size_t i{0}; i < m_time_by_step.size(); ++i) {
+    m_total_time += m_time_by_step[i].total_time;
+  }
+}
+
+std::ostream &hungarian_cpp::operator<<(std::ostream &out,
+                                        const hungarian_cpp::Benchmark &bm) {
   out << "Benchmark report:\n";
   out << '\n';
 
@@ -91,10 +100,4 @@ std::ostream &operator<<(std::ostream &out, const Benchmark &bm) {
   out << '\n';
 
   return out;
-}
-
-void Benchmark::CalcTotalTime() {
-  for (size_t i{0}; i < m_time_by_step.size(); ++i) {
-    m_total_time += m_time_by_step[i].total_time;
-  }
 }

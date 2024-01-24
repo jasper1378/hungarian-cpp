@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void PrintHelp() {
+void hungarian_cpp::PrintHelp() {
   std::cout << "Jasper's Implementation of the Hungarian Algorithm\n";
   std::cout << "Following the steps outlined here: "
                "https://brc2.com/the-algorithm-workshop\n";

@@ -11,28 +11,28 @@
 #include <utility>
 #include <vector>
 
-ArgParser::ArgParser(const int argc, char **argv,
-                     const std::vector<ValidName> &valid_names)
+hungarian_cpp::ArgParser::ArgParser(const int argc, char **argv,
+                                    const std::vector<ValidName> &valid_names)
     : m_valid_names{valid_names} {
   Init(argc, argv);
 }
 
-ArgParser::ArgParser(const int argc, char **argv,
-                     std::vector<ValidName> &&valid_names)
+hungarian_cpp::ArgParser::ArgParser(const int argc, char **argv,
+                                    std::vector<ValidName> &&valid_names)
     : m_valid_names{std::move(valid_names)} {
   Init(argc, argv);
 }
 
-ArgParser::ArgParser(const ArgParser &ap)
+hungarian_cpp::ArgParser::ArgParser(const ArgParser &ap)
     : m_args{ap.m_args}, m_valid_names{ap.m_valid_names} {}
 
-ArgParser::ArgParser(ArgParser &&ap) noexcept
+hungarian_cpp::ArgParser::ArgParser(ArgParser &&ap) noexcept
     : m_args{std::move(ap.m_args)}, m_valid_names{std::move(ap.m_valid_names)} {
 }
 
-ArgParser::~ArgParser() {}
+hungarian_cpp::ArgParser::~ArgParser() {}
 
-bool ArgParser::ArgExists(const std::string_view name) const {
+bool hungarian_cpp::ArgParser::ArgExists(const std::string_view name) const {
   for (size_t cur_arg{0}; cur_arg < m_args.size(); ++cur_arg) {
     if ((name == m_args[cur_arg].name.short_name) ||
         (name == m_args[cur_arg].name.long_name)) {
@@ -43,7 +43,8 @@ bool ArgParser::ArgExists(const std::string_view name) const {
   return false;
 }
 
-std::string ArgParser::GetValue(const std::string_view name) const {
+std::string
+hungarian_cpp::ArgParser::GetValue(const std::string_view name) const {
   for (size_t cur_arg{0}; cur_arg < m_args.size(); ++cur_arg) {
     if ((name == m_args[cur_arg].name.short_name) ||
         (name == m_args[cur_arg].name.long_name)) {
@@ -54,14 +55,16 @@ std::string ArgParser::GetValue(const std::string_view name) const {
   return "";
 }
 
-ArgParser &ArgParser::operator=(const ArgParser &ap) {
+hungarian_cpp::ArgParser &
+hungarian_cpp::ArgParser::operator=(const ArgParser &ap) {
   m_args = ap.m_args;
   m_valid_names = ap.m_valid_names;
 
   return *this;
 }
 
-ArgParser &ArgParser::operator=(ArgParser &&ap) noexcept {
+hungarian_cpp::ArgParser &
+hungarian_cpp::ArgParser::operator=(ArgParser &&ap) noexcept {
   if (this == &ap) {
     return *this;
   }
@@ -72,22 +75,7 @@ ArgParser &ArgParser::operator=(ArgParser &&ap) noexcept {
   return *this;
 }
 
-std::ostream &operator<<(std::ostream &out, const ArgParser &ap) {
-  for (size_t cur_arg{0}; cur_arg < ap.m_args.size(); ++cur_arg) {
-    out << "Short name: " << ap.m_args[cur_arg].name.short_name << '\n';
-    out << "Long name: " << ap.m_args[cur_arg].name.long_name << '\n';
-    out << "Value: "
-        << ((ap.m_args[cur_arg].value.empty() == true)
-                ? ("arg does not need a value")
-                : (ap.m_args[cur_arg].name.short_name))
-        << '\n';
-    out << '\n';
-  }
-
-  return out;
-}
-
-void ArgParser::Init(const int argc, char **argv) {
+void hungarian_cpp::ArgParser::Init(const int argc, char **argv) {
   for (char **cur_arg_ptr{argv + 1}; cur_arg_ptr != (argv + argc);
        ++cur_arg_ptr) {
     const std::string cur_arg{*cur_arg_ptr};
@@ -140,3 +128,20 @@ void ArgParser::Init(const int argc, char **argv) {
     }
   }
 }
+
+std::ostream &hungarian_cpp::operator<<(std::ostream &out,
+                                        const hungarian_cpp::ArgParser &ap) {
+  for (size_t cur_arg{0}; cur_arg < ap.m_args.size(); ++cur_arg) {
+    out << "Short name: " << ap.m_args[cur_arg].name.short_name << '\n';
+    out << "Long name: " << ap.m_args[cur_arg].name.long_name << '\n';
+    out << "Value: "
+        << ((ap.m_args[cur_arg].value.empty() == true)
+                ? ("arg does not need a value")
+                : (ap.m_args[cur_arg].name.short_name))
+        << '\n';
+    out << '\n';
+  }
+
+  return out;
+}
+
