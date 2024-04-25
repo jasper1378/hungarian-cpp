@@ -1,9 +1,11 @@
 # hungarian-cpp
 
 ## About
+
 An implementation of the Hungarian (Kuhn-Munkres) algorithm written in C++. Originally written for [this](https://www.reddit.com/r/dailyprogrammer/comments/oirb5v/20210712_challenge_398_difficult_matrix_sum/?utm_source=share&utm_medium=web2x&context=3) programming challenge (see [question.md](question.md) for details). 
 
 ## Installation
+
 Acquire the sources
 ```
 $ git clone https://github.com/jasper1378/hungarian-cpp.git
@@ -19,6 +21,7 @@ $ make install
 ```
 
 ## Usage
+
 ```
 Usage: hungarian-cpp [options]
 Options:
@@ -45,4 +48,5 @@ Options:
 ```
 
 ## License
+
 See [LICENSE](LICENSE) for details.
