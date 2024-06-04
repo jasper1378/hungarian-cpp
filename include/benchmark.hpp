@@ -1,7 +1,7 @@
 #ifndef HUNGARIAN_CPP_BENCHMARK_HPP
 #define HUNGARIAN_CPP_BENCHMARK_HPP
 
-#include "timer.hpp"
+#include "bits-and-bytes/timer/timer.hpp"
 
 #include <iostream>
 #include <vector>
@@ -19,7 +19,7 @@ public:
 private:
   struct StepTime {
     int step_id{};
-    Timer current_time{};
+    bits_and_bytes::timer current_time{};
     int times_run{};
     double total_time{};
     double average_time{};

@@ -2,6 +2,8 @@
 
 #include "benchmark.hpp"
 
+#include "bits-and-bytes/timer/timer.hpp"
+
 #include <cstddef>
 #include <exception>
 #include <iostream>
@@ -13,7 +15,7 @@
 hungarian_cpp::Benchmark::Benchmark(const int num_of_steps)
     : m_number_of_steps{num_of_steps}, m_total_time{0}, m_time_by_step{} {
   for (int i{1}; i <= num_of_steps; ++i) {
-    m_time_by_step.push_back(StepTime{i, Timer{}, 0, 0, 0});
+    m_time_by_step.push_back(StepTime{i, bits_and_bytes::timer{}, 0, 0, 0});
   }
 }
 
@@ -35,7 +37,7 @@ void hungarian_cpp::Benchmark::Start(const int step_id) {
 
   const int cur_step{step_id - 1};
 
-  m_time_by_step[cur_step].current_time.Reset();
+  m_time_by_step[cur_step].current_time.reset();
 }
 
 void hungarian_cpp::Benchmark::Stop(const int step_id) {
@@ -45,7 +47,7 @@ void hungarian_cpp::Benchmark::Stop(const int step_id) {
 
   const int cur_step{step_id - 1};
 
-  const double time_for_step{m_time_by_step[cur_step].current_time.Elapsed()};
+  const double time_for_step{m_time_by_step[cur_step].current_time.elapsed()};
 
   ++m_time_by_step[cur_step].times_run;
   m_time_by_step[cur_step].total_time += time_for_step;
